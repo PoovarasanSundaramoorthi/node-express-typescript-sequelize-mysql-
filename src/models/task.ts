@@ -1,11 +1,25 @@
-import { DataTypes, Model } from "sequelize";
+// task.ts
+import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
 
-class Task extends Model {
+interface TaskAttributes {
+    id: number;
+    title: string;
+    description: string | null;
+    completed: boolean;
+}
+
+interface TaskCreationAttributes extends Optional<TaskAttributes, "id"> { }
+
+class Task extends Model<TaskAttributes, TaskCreationAttributes> implements TaskAttributes {
     public id!: number;
     public title!: string;
-    public description!: string;
+    public description!: string | null;
     public completed!: boolean;
+
+    // Optional timestamps
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 }
 
 Task.init(
@@ -31,6 +45,7 @@ Task.init(
     {
         sequelize,
         modelName: "Task",
+        timestamps: true, // Enables createdAt and updatedAt
     }
 );
 
