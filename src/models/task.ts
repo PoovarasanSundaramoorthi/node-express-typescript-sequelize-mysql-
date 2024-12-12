@@ -5,7 +5,7 @@ import sequelize from "../config/database";
 interface TaskAttributes {
     id: number;
     title: string;
-    description: string | null;
+    description?: string;
     completed: boolean;
 }
 
@@ -14,7 +14,7 @@ interface TaskCreationAttributes extends Optional<TaskAttributes, "id"> { }
 class Task extends Model<TaskAttributes, TaskCreationAttributes> implements TaskAttributes {
     public id!: number;
     public title!: string;
-    public description!: string | null;
+    public description?: string;
     public completed!: boolean;
 
     // Optional timestamps
